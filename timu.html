@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,  minimum-scale=1.0">
+		<title></title>
+		<style type="text/css">
+			body {
+				user-select: none;
+			}
+			
+			input {
+				width: 60px;
+				height: 20px;
+				border: 1px solid gainsboro;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="div1">
+			<h1>第二题</h1>
+			<input type="" name="" id="" value="" />
+			<input type="" name="" id="" value="" />
+			<input type="" name="" id="" value="" />
+			<input type="" name="" id="" value="" />
+			<input type="button" name="" id="button" value="计算" />
+		</div>
+		<div id="div2">
+			<h2>第三题</h2>
+			<span id="spans">
+				1,2,4,8,.....,65536的和为
+			</span>
+			<input type="text" name="" id="spanInput" />
+		</div>
+		<div id="div3">
+			<h2>第四题</h2>
+			<span id="spans">
+				时间
+			</span>
+			<input type="text" name="" id="timeInput" value="1" />
+			<input type="button" name="timeBut" id="timeBut" value="计算" />
+			<span id="spans">
+				高度为
+			</span>
+			<input type="text" name="" id="heightInput" style="width: 200px;" />
+		</div>
+		<div id="div4">
+			<h2>第五题</h2>
+			<span id="spans">
+				输入n
+			</span>
+			<input type="text" name="" id="factorialInput" />
+			<input type="button" name="timeBut" id="factorialBut" value="计算" />
+			<span id="spans">
+				结果
+			</span>
+			<input type="text" name="" id="factorialInp" />
+			<div id="divf"></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="jquery-1.12.1.min.js"></script>
+	<script type="text/javascript">
+		//第二题
+		$('#button').on('click', function() {
+			peek();
+		})
+
+		function peek() {
+			//原始数组
+			var arr = [$('input').eq(0).val(), $('input').eq(1).val(), $('input').eq(2).val(), $('input').eq(3).val()]
+			var arrJieguo = [];
+			var arra = []; //中间取各个位数
+			var arrLength;
+			for(let i = 0; i < arr.length; i++) {
+				arrLength = arr[i].toString().length;
+				for(let j = 0; j < arrLength; j++) {
+					var num2 = arr[i];
+					var numTest = Math.pow(10, j);
+					var a = num2 / numTest % 10;
+					arra.push(parseInt(a));
+					if(arra.length == arrLength) {
+						var arra1 = []; //判断数字是否相同
+						for(let k = 0; k < arra.length; k++) {
+							if(arra1.indexOf(arra[k]) == -1) {
+								arra1.push(arra[k]);
+							}
+						}
+						if(arra1.length == 1) {
+							arrJieguo.push(arr[i]);
+						}
+						arra = [];
+					}
+				}
+			}
+			alert(arrJieguo);
+		}
+		//第三题
+		let num1 = 0;
+
+		function add() {
+			for(let i = 0; i <= 16; i++) {
+				if(Math.pow(2, i) <= 65536) {
+					num1 = num1 + Math.pow(2, i);
+				}
+			}
+			return num1;
+		}
+		add();
+		$('#spanInput').val(num1);;
+		//第五题
+		function factorial(n) {
+			var arr1 = [];
+			$('#factorialInp').val(Math.pow(2, n));
+			for(let i = 0; i <= n; i++) {
+				arr1.push('2的' + i + '次方等于' + Math.pow(2, i) + '  ');
+			}
+			$('#divf').text(arr1);
+		}
+
+		$('#factorialBut').on('click', function() {
+			factorial($('#factorialInput').val());
+		})
+		//第四题
+		var h = 10; //g默认为10
+		var a = 1;
+
+		function xiaoQiu(t) {
+			var t = Math.pow(t, 2);
+			for(let i = 0; i < 10000; i++) {
+				if(t > 2 * h / 10) {
+					h = h - h / 10;
+					t = t - 2 * h / 10;
+					a++;
+				}
+			}
+			console.log(h, t, a)
+			if(a % 2 != 0 || t == 0) {
+				h = h - 5 * t;
+			} else {
+				h = 5 * t; //g*t/2
+			}
+			if(h > 0 && h < 10) {
+				$('#heightInput').val(h);
+			} else {
+				$('#heightInput').val('小球已接近于停止高度趋近零');
+			}
+		}
+		$('#timeBut').on('click', function() {
+
+			var t = $('#timeInput').val();
+			xiaoQiu(t);
+			h = 10;
+		})
+	</script>
+
+</html>
