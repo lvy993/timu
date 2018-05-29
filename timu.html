@@ -141,7 +141,7 @@
 			} else {
 				h = 5 * t; //g*t/2
 			}
-			if(h > 0 && h < 10) {
+			if(h >= 0 && h <= 10) {
 				$('#heightInput').val(h);
 			} else {
 				$('#heightInput').val('小球已接近于停止高度趋近零');
